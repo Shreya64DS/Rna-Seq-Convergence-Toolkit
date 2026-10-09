@@ -18,14 +18,9 @@ very few genes survive strict significance in any one study, even when real
 biological signal is present. Meanwhile, naively combining raw data from
 different studies is unsafe, because:
 
-- studies use different **case definitions**, **comparator groups**, and
-  **sample types** (e.g. PBMC vs. whole blood)
-- **repeated/longitudinal samples** from the same patient can masquerade as
-  independent replication and inflate significance
-- genes can be **significant in multiple datasets but change in opposite
-  directions** — apparent "replication" that isn't real
-- a **general infection/inflammation response** can be mistaken for a
-  condition-specific signal unless checked against a comparator condition
+- the case definitions used, the **comparison groups**, and the **sample types** are not consistent (such    as PBMC vs whole blood).
+- repeated samples taken from the same individual may be mistakenly interpreted as **independent             replication**  genes may be significant across several data sets, but their **expression patterns** may    be   contradictory - this is pseudo-replication.
+- the presence of a generalized **infection/inflammatory response** may be falsely considered as a disease   signature without comparing to other conditions.
 
 This pipeline provides small, focused tools to handle each of these issues
 explicitly rather than silently.
@@ -59,13 +54,12 @@ on what you need.
 
 ## Why DESeq2 runs externally
 
-This pipeline deliberately does **not** attempt to reimplement DESeq2's
-statistics in pure Python. DESeq2's negative-binomial model is the field
-standard for RNA-seq count data and is what most published studies use — a
-simpler substitute (e.g. a t-test) was tried during this project's
-development and produced results that failed to replicate the original
-authors' own published findings on the same data. Rather than risk the same
-mistake for other users, this pipeline treats DESeq2 as an external step:
+It is important to note that this pipeline **does not** aim to recreate the
+DESeq2 statistics with pure Python. The negative binomial distribution of
+DESeq2 is the standard way to analyze the RNA-seq counts, and it is used by
+most papers published; an alternative approach (e.g., t-test) was tested at
+some point during this project, and it did not reproduce the results of the
+original paper with their own data. This risk is avoided in this pipeline by
 
 - **Recommended, no install required:** [usegalaxy.org](https://usegalaxy.org) —
   free, runs real DESeq2, works entirely in-browser.
